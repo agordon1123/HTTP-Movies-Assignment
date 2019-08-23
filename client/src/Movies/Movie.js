@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 import MovieCard from "./MovieCard";
 export default class Movie extends React.Component {
   constructor(props) {
+    console.log(props)
     super(props);
     this.state = {
       movie: null
@@ -31,18 +33,26 @@ export default class Movie extends React.Component {
     addToSavedList(this.state.movie);
   };
 
+  editMovie = () => {
+    console.log(this.props)
+    this.props.history.push(`/update-movie/${this.state.movie.id}`)
+  }
+
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
     }
 
     return (
-      <div className="save-wrapper">
-        <MovieCard movie={this.state.movie} />
-        <div className="save-button" onClick={this.saveMovie}>
-          Save
+        <div className="save-wrapper">
+          <MovieCard movie={this.state.movie} />
+          <div className="save-button" onClick={this.saveMovie}>
+            Save
+          </div>
+          <div className='edit-button' onClick={this.editMovie}>
+            Edit
+          </div>
         </div>
-      </div>
     );
   }
 }
